@@ -12,14 +12,14 @@ struct Aluno {
     int matricula;
     string curso;
     int anoMatricula;
-    map<string, pair<array<float, 3>, int>> materias;  // matérias, notas (3 notas), e frequência
+    map<string, pair<array<float, 3>, int>> materias;  
 };
 
 struct Materia {
     string nome;
     string codigo;
     int creditos;
-    vector<int> alunosMatriculados;  // Matrículas dos alunos
+    vector<int> alunosMatriculados;  
 };
 
 struct Curso {
@@ -27,7 +27,6 @@ struct Curso {
     vector<Aluno*> alunosMatriculados;
 };
 
-// Funções auxiliares para buscar aluno e matéria com busca binária
 Aluno* buscarAlunoPorMatricula(const vector<Aluno*>& alunos, int matricula) {
     int low = 0, high = alunos.size() - 1;
 
@@ -60,7 +59,6 @@ Materia* buscarMateriaPorCodigo(const vector<Materia>& materias, const string& c
     return nullptr;
 }
 
-// Funções para o Menu de Aluno
 void realizarMatricula(vector<Aluno*>& alunos, vector<Curso>& cursos) {
     string nome, curso;
     int matricula, anoMatricula;
@@ -76,16 +74,14 @@ void realizarMatricula(vector<Aluno*>& alunos, vector<Curso>& cursos) {
     cin.ignore();
     getline(cin, curso);
 
-    // Criando um novo aluno
     Aluno* novoAluno = new Aluno;
     novoAluno->nome = nome;
     novoAluno->matricula = matricula;
     novoAluno->curso = curso;
     novoAluno->anoMatricula = anoMatricula;
 
-    // Matriculando o aluno no curso
     bool cursoEncontrado = false;
-    for (Curso& c : cursos) {  // Usando referencia em vez de ponteiro
+    for (Curso& c : cursos) { 
         if (c.nome == curso) {
             c.alunosMatriculados.push_back(novoAluno);
             cursoEncontrado = true;
@@ -130,16 +126,15 @@ void listarRankingPorMateria(const vector<Materia>& materias, const vector<Aluno
         }
     }
 
-    // Aplicando o Selection Sort para ordenar o ranking pela média
     for (size_t i = 0; i < ranking.size() - 1; ++i) {
         size_t maxIndex = i;
         for (size_t j = i + 1; j < ranking.size(); ++j) {
-            if (ranking[j].second > ranking[maxIndex].second) {  // Ordena de forma decrescente
+            if (ranking[j].second > ranking[maxIndex].second) {  
                 maxIndex = j;
             }
         }
         if (maxIndex != i) {
-            swap(ranking[i], ranking[maxIndex]);  // Troca os elementos
+            swap(ranking[i], ranking[maxIndex]);  
         }
     }
 
@@ -185,7 +180,6 @@ void verDetalhesMatriculaAluno(const vector<Aluno*>& alunos) {
     cout << "Ano da Matrícula: " << aluno->anoMatricula << "\n";
 }
 
-// Funções para o Menu de Professor
 void cadastrarMateria(vector<Materia>& materias) {
     string nome, codigo;
     int creditos;
@@ -228,9 +222,8 @@ void vincularAlunoAMateria(vector<Aluno*>& alunos, vector<Materia>& materias) {
         return;
     }
 
-    // Vinculando aluno à matéria
     materia->alunosMatriculados.push_back(matriculaAluno);
-    aluno->materias[codigoMateria] = make_pair(array<float, 3>{0, 0, 0}, 0);  // Inicializando notas e frequência
+    aluno->materias[codigoMateria] = make_pair(array<float, 3>{0, 0, 0}, 0);  
     cout << "Aluno matriculado na matéria com sucesso!\n";
 }
 
@@ -257,17 +250,14 @@ void cadastrarNotasEFrequencias(vector<Aluno*>& alunos, vector<Materia>& materia
         return;
     }
 
-    // Entrando com as notas
     cout << "Digite as 3 notas do aluno: ";
     for (int i = 0; i < 3; ++i) {
         cin >> notas[i];
     }
 
-    // Entrando com a frequência
     cout << "Digite a frequência do aluno (em %): ";
     cin >> frequencia;
 
-    // Atualizando dados do aluno
     aluno->materias[codigoMateria] = make_pair(notas, frequencia);
     cout << "Notas e frequência cadastradas com sucesso!\n";
 }
