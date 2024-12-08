@@ -282,7 +282,7 @@ void listarAlunosAprovadosReprovadosPorNotaOuFrequencia(const vector<Materia>& m
                 int frequencia = dados.second;
 
                 cout << aluno->nome << " - Média: " << media << " - Frequência: " << frequencia << "%\n";
-                if (media >= 6.0 && frequencia >= 75) {
+                if (media >= 7.0 && frequencia >= 75) {
                     cout << "Aprovado!\n";
                 } else {
                     cout << "Reprovado!\n";
@@ -300,7 +300,7 @@ void listarAlunosReprovadosEmMaterias(const vector<Aluno*>& alunos) {
             float media = (materia.second.first[0] + materia.second.first[1] + materia.second.first[2]) / 3.0;
             int frequencia = materia.second.second;
 
-            if (media < 6.0 || frequencia < 75) {
+            if (media < 7.0 || frequencia < 75) {
                 cout << " - Matéria: " << materia.first << " - Média: " << media << " - Frequência: " << frequencia << "% (Reprovado)\n";
             }
         }
